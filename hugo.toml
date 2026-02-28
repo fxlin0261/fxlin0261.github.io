@@ -1,0 +1,93 @@
+# 1. 基础设置
+# 如果你的仓库名是 <用��名>.github.io，这里写 https://<用户名>.github.io/
+# 如果是普通仓库，写 https://<用户名>.github.io/<仓库名>/
+baseURL = "https://fxlin0261.github.io/" 
+languageCode = "zh-cn"
+title = "我的技术博客"
+theme = "PaperMod"
+
+# 开启中文分词（对搜索和字数统计很重要）
+hasCJKLanguage = true
+# 预览时每页文章数
+paginate = 10
+
+# 2. 搜索功能配置 (必须有这个，搜索框才有用)
+[outputs]
+    home = ["HTML", "RSS", "JSON"]
+
+# 3. 菜单配置 (顶部导航栏)
+[[menu.main]]
+    identifier = "posts"
+    name = "文章"
+    url = "/posts/"
+    weight = 10
+[[menu.main]]
+    identifier = "archives"
+    name = "归档"
+    url = "/archives/"
+    weight = 20
+[[menu.main]]
+    identifier = "search"
+    name = "搜索"
+    url = "/search/"
+    weight = 30
+[[menu.main]]
+    identifier = "tags"
+    name = "标签"
+    url = "/tags/"
+    weight = 40
+
+# 4. 主题参数配置 (PaperMod 核心设置)
+[params]
+    env = "production" # 生产环境
+    title = "我的博客"
+    description = "写代码，也写生活"
+    author = "你的名字"
+    
+    # 界面外观
+    defaultTheme = "auto" # 自动切换深色/浅色模式，可选 "dark", "light"
+    showCodeCopyButtons = true # 代码块复制按钮
+    showReadingTime = true # 显示阅读时间
+    showBreadCrumbs = true # 显示面包屑导航
+    
+    # 首页显示样式（模式 1：个人介绍模式）
+    [params.profileMode]
+        enabled = true # 改为 false 则显示文章列表
+        title = "你好，我是某某 👋"
+        subtitle = "一名热爱技术的开发者 | Python | Go | Hugo"
+        imageUrl = "https://avatars.githubusercontent.com/u/123456" # 你的头像地址
+        imageTitle = "我的头像"
+        
+        [[params.profileMode.buttons]]
+            name = "查看文章"
+            url = "posts"
+        [[params.profileMode.buttons]]
+            name = "关于我"
+            url = "about"
+
+    # 社交链接图标
+    [[params.socialIcons]]
+        name = "github"
+        url = "https://github.com/你的用户名"
+    [[params.socialIcons]]
+        name = "email"
+        url = "mailto:youremail@example.com"
+    [[params.socialIcons]]
+        name = "twitter"
+        url = "https://twitter.com/你的用户名"
+
+    # 文章页设置
+    [params.editPost]
+        URL = "https://github.com/你的用户名/你的仓库名/edit/main/content"
+        Text = "建议修改" # 显示在文章末尾，点击可直接跳转到 GitHub 修改
+        appendFilePath = true
+
+# 5. 隐私设置 (可选，为了加载更快)
+[privacy.vimeo]
+    disabled = true
+[privacy.twitter]
+    disabled = true
+[privacy.instagram]
+    disabled = true
+[privacy.youtube]
+    disabled = true
