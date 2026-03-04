@@ -1,3 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
 :root {
-    --main-width: 960px; 
+    --main-width: 880px;
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --code-font-family: 'JetBrains Mono', Consolas, Monaco, 'Courier New', monospace;
+    --gap: 32px;
+}
+
+.post-content {
+    font-size: 17px;
+    line-height: 1.75;
 }
