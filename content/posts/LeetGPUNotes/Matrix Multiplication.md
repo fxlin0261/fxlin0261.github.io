@@ -1,0 +1,42 @@
+---
+title: "Matrix Multiplication"
+date: 2026-03-12
+tags: ["LeetGPUNotes"]
+---
+
+# Matrix Multiplication
+---
+最基本写法  
+问题：GM多些次数过多
+```cuda
+#include <cuda_runtime.h>
+
+__global__ void matrix_multiplication_kernel(const float* A, const float* B, float* C, int M, int N,
+                                             int K) {
+    int tidx = blockIdx.x * blockDim.x + threadIdx.x;
+    int tidy = blockIdx.y * blockDim.y + threadIdx.y;
+    // MN * NK = MK
+    if (tidy < M && tidx < K) {
+        float sum = 0;
+        for (int i = 0; i < N; ++i) {
+            sum += A[tidy * N + i] * B[i * K + tidx];
+        }
+        C[tidy * K + tidx] = sum;
+    }
+}
+
+// A, B, C are device pointers (i.e. pointers to memory on the GPU)
+extern "C" void solve(const float* A, const float* B, float* C, int M, int N, int K) {
+    dim3 threadsPerBlock(16, 16);
+    dim3 blocksPerGrid((K + threadsPerBlock.x - 1) / threadsPerBlock.x,
+                       (M + threadsPerBlock.y - 1) / threadsPerBlock.y);
+
+    matrix_multiplication_kernel<<<blocksPerGrid, threadsPerBlock>>>(A, B, C, M, N, K);
+    cudaDeviceSynchronize();
+}
+```
+
+Tile块  
+```cuda
+
+```
