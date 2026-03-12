@@ -1,13 +1,96 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 :root {
-    --main-width: 880px;
-    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    --code-font-family: 'JetBrains Mono', Consolas, Monaco, 'Courier New', monospace;
-    --gap: 32px;
+  --main-width: 960px;
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --code-font-family: 'JetBrains Mono', Consolas, Monaco, 'Courier New', monospace;
+  --gap: 32px;
 }
 
+/* 正文阅读 */
 .post-content {
-    font-size: 17px;
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+/* 行内代码 */
+.post-content code {
+  font-family: var(--code-font-family);
+  font-size: 0.92em;
+  padding: 0.15em 0.35em;
+  border-radius: 6px;
+}
+
+/* 代码块外层 */
+.post-content pre {
+  font-family: var(--code-font-family);
+  font-size: 14px;
+  line-height: 1.7;
+  padding: 18px 20px;
+  border-radius: 12px;
+  overflow-x: auto;
+  margin: 1.2rem 0 1.5rem 0;
+  border: 1px solid var(--border);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* 代码块内部 */
+.post-content pre code {
+  font-family: var(--code-font-family);
+  font-size: 14px;
+  line-height: 1.7;
+  background: transparent !important;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* Hugo/Chroma 常见容器 */
+.post-content .highlight {
+  margin: 1.2rem 0 1.5rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.post-content .highlight pre {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* 行号区域不要太挤 */
+.post-content .lnt,
+.post-content .ln,
+.post-content .lntd {
+  font-family: var(--code-font-family);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* 表格和代码块间距更舒服 */
+.post-content table {
+  display: block;
+  overflow-x: auto;
+}
+
+/* 宽屏时正文稍微放宽，更适合技术文章 */
+@media (min-width: 1400px) {
+  :root {
+    --main-width: 1040px;
+  }
+}
+
+/* 移动端代码块 */
+@media (max-width: 768px) {
+  .post-content pre,
+  .post-content pre code {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .post-content {
+    font-size: 16px;
     line-height: 1.75;
+  }
 }

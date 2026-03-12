@@ -61,3 +61,12 @@ weight = 40
         [markup.goldmark.extensions.passthrough.delimiters]
           block = [['\[', '\]'], ['$$', '$$']]
           inline = [['\(', '\)'], ['$', '$']]
+
+[markup.highlight]
+  noClasses = false
+  codeFences = true
+  guessSyntax = true
+  lineNos = true
+  lineNumbersInTable = false
+  tabWidth = 4
+  style = "github-dark"
