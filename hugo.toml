@@ -30,7 +30,6 @@ tocopen = false
 math = true
 
 [taxonomies]
-tag = "tags"
 series = "series"
 
 [[menu.main]]
@@ -39,8 +38,8 @@ url = "/archives/"
 weight = 10
 
 [[menu.main]]
-name = "标签"
-url = "/tags/"
+name = "目录"
+url = "/posts/"
 weight = 20
 
 [[menu.main]]

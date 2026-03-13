@@ -1,7 +1,6 @@
 ---
 title: "Matrix Multiplication"
 date: 2026-03-12
-tags: ["LeetGPUNotes"]
 ---
 
 # Matrix Multiplication

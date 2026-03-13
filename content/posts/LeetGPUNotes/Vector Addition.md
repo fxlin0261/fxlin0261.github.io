@@ -1,7 +1,6 @@
 ---
 title: "Vector Addition"
 date: 2026-03-12
-tags: ["LeetGPUNotes"]
 ---
 
 # Vector Addition
@@ -64,4 +63,3 @@ extern "C" void solve(const float* A, const float* B, float* C, int N) {
     cudaDeviceSynchronize();
 }
 ```
-
