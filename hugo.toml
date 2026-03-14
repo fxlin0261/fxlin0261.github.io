@@ -19,15 +19,21 @@ env = "production"
 author = "fxlin0261"
 defaultTheme = "dark"
 ShowReadingTime = true
-ShowShareButtons = true
+ShowShareButtons = false
 ShowPostNavLinks = true
-ShowBreadCrumbs = true
+ShowBreadCrumbs = false
 ShowCodeCopyButtons = true
-ShowWordCount = true
+ShowWordCount = false
 UseHugoToc = true
 showtoc = true
 tocopen = false
 math = true
+disableSpecial1stPost = true
+mainSections = ["cpp", "cuda", "ml", "systems", "misc"]
+
+[params.homeInfoParams]
+Title = "fxlin"
+Content = "记录 C++、CUDA、ML 和 systems 相关笔记。\n\n- [cpp](/posts/cpp/)\n- [cuda](/posts/cuda/)\n- [ml](/posts/ml/)\n- [systems](/posts/systems/)\n- [misc](/posts/misc/)\n- [GitHub](https://github.com/fxlin0261)"
 
 [taxonomies]
 series = "series"
