@@ -1,6 +1,6 @@
 ---
 title: "Matrix Multiplication"
-date: 2026-03-12
+date: 2026-03-14
 ---
 
 # Matrix Multiplication
