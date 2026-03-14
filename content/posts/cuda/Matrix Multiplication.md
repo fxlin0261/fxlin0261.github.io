@@ -1,5 +1,5 @@
 ---
-title: "Matrix Multiplication"
+title: "LeetGPUNotes: Matrix Multiplication"
 date: 2026-03-14
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "Vector Addition"
+title: "LeetGPUNotes: Vector Addition"
 date: 2026-03-12
 ---
 
