@@ -31,9 +31,42 @@ math = true
 disableSpecial1stPost = true
 mainSections = ["cpp", "cuda", "ml", "systems", "misc"]
 
-[params.homeInfoParams]
-Title = "fxlin"
-Content = "记录 C++、CUDA、ML 和 systems 相关笔记。\n\n- [cpp](/posts/cpp/)\n- [cuda](/posts/cuda/)\n- [ml](/posts/ml/)\n- [systems](/posts/systems/)\n- [misc](/posts/misc/)\n- [GitHub](https://github.com/fxlin0261)"
+[params.profileMode]
+enabled = true
+title = "fxlin"
+subtitle = "C++ / CUDA / ML / Systems notes"
+imageUrl = ""
+imageTitle = "fxlin"
+imageWidth = 120
+imageHeight = 120
+
+[[params.profileMode.buttons]]
+name = "Posts"
+url = "/posts/"
+
+[[params.profileMode.buttons]]
+name = "cpp"
+url = "/posts/cpp/"
+
+[[params.profileMode.buttons]]
+name = "cuda"
+url = "/posts/cuda/"
+
+[[params.profileMode.buttons]]
+name = "ml"
+url = "/posts/ml/"
+
+[[params.profileMode.buttons]]
+name = "systems"
+url = "/posts/systems/"
+
+[[params.profileMode.buttons]]
+name = "GitHub"
+url = "https://github.com/fxlin0261"
+
+[[params.socialIcons]]
+name = "github"
+url = "https://github.com/fxlin0261"
 
 [taxonomies]
 series = "series"
