@@ -3,7 +3,7 @@ title: "LeetGPUNotes: Vector Addition"
 date: 2026-03-12
 ---
 
-# Vector Addition
+# LeetGPUNotes: Vector Addition
 ---
 最基本写法
 ```cuda

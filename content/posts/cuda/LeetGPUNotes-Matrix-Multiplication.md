@@ -3,7 +3,7 @@ title: "LeetGPUNotes: Matrix Multiplication"
 date: 2026-03-14
 ---
 
-# Matrix Multiplication
+# LeetGPUNotes: Matrix Multiplication
 ---
 最基本写法  
 问题：GM多些次数过多
