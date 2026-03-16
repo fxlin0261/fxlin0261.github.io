@@ -28,8 +28,9 @@ disableShare: true
 
 ### 🕰️ 过往经历
 
-* **Embedded:** ARM 嵌入式开发 | FPGA 逻辑设计
-* **Multimedia:** 音视频流媒体开发
+* **Embedded:** ARM 嵌入式开发 | FPGA 逻辑设计  
+* **Multimedia:** 音视频流媒体开发  
+* **Remote Sensing:** 微波遥感  
 
 ## 📬 联系方式
 - **fxlin0261@gmail.com**
