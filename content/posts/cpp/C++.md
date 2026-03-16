@@ -1,7 +1,7 @@
 ---
 title: "C++"
 date: 2026-02-28
-summary: "记录 explicit、宏包装、inline 和 [[nodiscard]] 的常见用法。"
+summary: "记录 explicit、宏包装、inline、[[nodiscard]] 和常见位运算写法。"
 showtoc: false
 ---
 
@@ -66,3 +66,17 @@ int x = foo(); // OK
 
 1. `[[nodiscard]]` 是 C++17。
 2. `[[nodiscard("reason")]]` 是 C++20。
+
+## 5. 一些常用位运算
+
+对于 `w` 位无符号整数 `x`：
+
+```cpp
+MAX - x == x ^ MAX == ~x
+```
+
+把 `x` 向下对齐到 `2^n` 的倍数：
+
+```cpp
+x & ~((1 << n) - 1) == x & ~(2^n - 1) == (x / 2^n) * 2^n
+```
