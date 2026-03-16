@@ -1,18 +1,68 @@
 ---
 title: "C++"
 date: 2026-02-28
+summary: "记录 explicit、宏包装、inline 和 [[nodiscard]] 的常见用法。"
+showtoc: false
 ---
 
-# C++
----
+## 1. `explicit`
 
-1. explicit加在构造函数前面禁止隐式转换 = 只能人为调用，不能编译器自动调用  
+用于禁止单参数构造函数的隐式转换。
 
-2. 复杂宏且没有返回值使用 do {} while(false)，防止分号悬挂的问题，但更推荐使用inline  
+```cpp
+class A {
+public:
+    explicit A(int value) : value_(value) {}
 
-3. inline  
-解决的问题：消除函数调用的栈帧开销；替代宏（提供类型安全）；解决 ODR 问题（允许在头文件中直接定义实现）  
-与模板的关系：模板函数/类成员隐式均为 inline，故实现通常写在 .h 中（若分离到 .cpp 需显式实例化）  
-与宏的区别：inline 是函数（遵循作用域和类型检查），宏是文本替换；inline 的 return 仅退出当前函数，不会影响调用者  
+private:
+    int value_;
+};
 
+A a1(1);     // OK
+// A a2 = 1; // error: 禁止隐式转换
+```
 
+## 2. 宏里的 `do { } while(false)`
+
+多语句、无返回值宏建议用 `do { } while(false)` 包装，避免悬空分号和 `if/else` 配对问题。
+
+```cpp
+#define LOG_AND_RETURN_IF_NULL(ptr) \
+    do {                            \
+        if ((ptr) == nullptr) {     \
+            LOG(ERROR) << "null";   \
+            return;                 \
+        }                           \
+    } while (false)
+```
+
+优先用函数或 `inline` 替代宏。
+
+## 3. `inline`
+
+核心作用：
+
+1. 作为内联提示，是否展开由编译器决定。
+2. 可替代部分宏，具备类型检查和作用域语义。
+3. 允许函数定义放在头文件中，避免 ODR 冲突。
+
+补充：
+
+1. 模板实现通常写在头文件；若放到 `.cpp`，通常需要显式实例化。
+2. `inline` 中的 `return` 只返回当前函数。
+
+## 4. `[[nodiscard]]`
+
+属性，不是关键字。用于提示返回值不应被忽略。
+
+```cpp
+[[nodiscard]] int foo();
+
+foo();         // 可能触发警告
+int x = foo(); // OK
+```
+
+补充：
+
+1. `[[nodiscard]]` 是 C++17。
+2. `[[nodiscard("reason")]]` 是 C++20。
