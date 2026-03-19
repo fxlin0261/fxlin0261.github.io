@@ -68,6 +68,25 @@
   line-height: 1.7;
 }
 
+/* 保留显示行号，但复制/选择时尽量不要把行号带上 */
+.post-content .lnt,
+.post-content .ln,
+.post-content .lntd:first-child,
+.post-content .lntable td:first-child,
+.post-content .chroma .ln,
+.post-content .chroma .lnt {
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.post-content .lntable td:last-child,
+.post-content .chroma .cl,
+.post-content .chroma .line {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 /* 表格和代码块间距更舒服 */
 .post-content table {
   display: block;
