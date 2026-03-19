@@ -1,4 +1,12 @@
+---
+title: "LeetGPUNotes: Matrix Addition"
+date: 2026-03-19
+---
+
+# LeetGPUNotes: Matrix Addition
+---
 基础写法
+```cuda
 #include <cuda_runtime.h>
  
 __global__ void matrix_add(const float* __restrict A, const float* __restrict B, float* C, int N) {
@@ -15,8 +23,10 @@ extern "C" void solve(const float* A, const float* B, float* C, int N) {
     matrix_add<<<blocksPerGrid, threadsPerBlock>>>(A, B, C, N);
     cudaDeviceSynchronize();
 }
+```
 
-# 向量化
+向量化
+```cuda
 #include <cuda_runtime.h>
 
 __global__ void matrix_addition(const float *__restrict A, const float *__restrict B, float *C, int N) {
@@ -37,11 +47,8 @@ __global__ void matrix_addition(const float *__restrict A, const float *__restri
 extern "C" void solve(const float* A, const float* B, float* C, int N) {
     int total_elements = N * N;
     int threadsPerBlock = 256;
-    int blocksPerGrid = ((total_elements + 4 - 1) / 4 * 4 / 4 + threadsPerBlock - 1) / threadsPerBlock;
+    int blocksPerGrid = (((total_elements + 3) / 4) + threadsPerBlock - 1) / threadsPerBlock;
     matrix_addition<<<blocksPerGrid, threadsPerBlock>>>(A, B, C, N);
     cudaDeviceSynchronize();
 }
-
-
-
-
+```

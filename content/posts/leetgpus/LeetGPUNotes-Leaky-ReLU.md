@@ -1,4 +1,12 @@
+---
+title: "LeetGPUNotes: Leaky ReLU"
+date: 2026-03-19
+---
+
+# LeetGPUNotes: Leaky ReLU
+---
 基础写法
+```cuda
 #include <cuda_runtime.h>
 
 __global__ void leaky_relu_kernel(float * x, int n, const float alpha) {
@@ -17,8 +25,10 @@ extern "C" void solve(float* x, int n) {
     leaky_relu_kernel<<<blocksPerGrid, threadsPerBlock>>>(x, n, alpha);
     cudaDeviceSynchronize();
 }
+```
 
 向量化
+```cuda
 #include <cuda_runtime.h>
 
 __global__ void leaky_relu_kernel(float * x, int n, const float alpha) {
@@ -42,9 +52,9 @@ __global__ void leaky_relu_kernel(float * x, int n, const float alpha) {
 // x is a device pointer
 extern "C" void solve(float* x, int n) {
     const int threadsPerBlock = 256;
-    const int blocksPerGrid = ((n + 3) / 4  + threadsPerBlock - 1) / threadsPerBlock;
+    const int blocksPerGrid = ((n + 3) / 4 + threadsPerBlock - 1) / threadsPerBlock;
     const float alpha = 0.01f;
     leaky_relu_kernel<<<blocksPerGrid, threadsPerBlock>>>(x, n, alpha);
     cudaDeviceSynchronize();
 }
-
+```

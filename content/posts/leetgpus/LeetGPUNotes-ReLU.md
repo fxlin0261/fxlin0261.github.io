@@ -1,4 +1,12 @@
+---
+title: "LeetGPUNotes: ReLU"
+date: 2026-03-19
+---
+
+# LeetGPUNotes: ReLU
+---
 基础写法
+```cuda
 #include <cuda_runtime.h>
 
 // ReLU(x) = max(0, x)
@@ -16,8 +24,10 @@ extern "C" void solve(float* x, int n) {
     relu_kernel<<<blocksPerGrid, threadsPerBlock>>>(x, n);
     cudaDeviceSynchronize();
 }
+```
 
 向量化加载
+```cuda
 #include <cuda_runtime.h>
 
 // ReLU(x) = max(0, x)
@@ -42,8 +52,8 @@ __global__ void relu_kernel(float* x, int n) {
 // x is a device pointer
 extern "C" void solve(float* x, int n) {
     int threadsPerBlock = 256;
-    int blocksPerGrid = ((n + 3)/ 4 * 4 / 4 + threadsPerBlock - 1) / threadsPerBlock;
+    int blocksPerGrid = (((n + 3) / 4) + threadsPerBlock - 1) / threadsPerBlock;
     relu_kernel<<<blocksPerGrid, threadsPerBlock>>>(x, n);
     cudaDeviceSynchronize();
 }
-
+```

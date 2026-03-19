@@ -1,4 +1,12 @@
+---
+title: "LeetGPUNotes: Rainbow Table"
+date: 2026-03-19
+---
+
+# LeetGPUNotes: Rainbow Table
+---
 基础版
+```cuda
 #include <cuda_runtime.h>
 
 __device__ __forceinline__ unsigned int fnv1a_hash(unsigned int x) {
@@ -43,7 +51,4 @@ extern "C" void solve(const int* input, unsigned int* output, int N, int R) {
     rainbow_table_kernel<<<blocks, THREADS>>>(input, output, N, R);
     cudaDeviceSynchronize();
 }
-
-
-
-
+```
