@@ -1,9 +1,9 @@
 ---
-title: "tmux 小抄"
+title: "tmux基本"
 date: 2026-03-19
 ---
 
-# tmux 小抄（8条够用）
+# tmux基本
 ---
 
 1）启动 tmux

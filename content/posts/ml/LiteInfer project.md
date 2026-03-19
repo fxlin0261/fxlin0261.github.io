@@ -1,3 +1,8 @@
+---
+title: "LiteInfer project"
+date: 2026-03-19
+---
+
 推理流程
 string->tokenid[T]->embeddeding[T, d_model]->for in embeddeding = vector->infer->logits[1, vocab]->sampler[1]->tokenid->word
 两个阶段

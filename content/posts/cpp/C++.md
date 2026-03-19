@@ -1,6 +1,6 @@
 ---
 title: "C++"
-date: 2026-02-28
+date: 2026-03-01
 summary: "记录 explicit、宏包装、inline、[[nodiscard]] 和常见位运算写法。"
 showtoc: false
 ---
