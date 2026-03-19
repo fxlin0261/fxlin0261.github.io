@@ -5,24 +5,6 @@ date: 2026-03-19
 
 # LeetGPUNotes: Reduction
 ---
-基础写法
-```cuda
-#include <cuda_runtime.h>
-
-#define BLOCK_SIZE 1024
-
-__global__ void reduction(const float* input, float* output, int N) {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    if (idx < N) {
-        atomicAdd(output, input[idx]);
-    }
-}
-
-extern "C" void solve(const float* input, float* output, int N) {
-    reduction<<<(N + BLOCK_SIZE - 1) / BLOCK_SIZE, BLOCK_SIZE>>>(input, output, N);
-}
-```
-
 共享内存 + __shfl_down
 ```cuda
 #include <cuda_runtime.h>
@@ -62,6 +44,24 @@ __global__ void reduction(const float *input, float *output, int N) {
 
 // input, output are device pointers
 extern "C" void solve(const float *input, float *output, int N) {
+    reduction<<<(N + BLOCK_SIZE - 1) / BLOCK_SIZE, BLOCK_SIZE>>>(input, output, N);
+}
+```
+
+基础写法（会有确定性问题，不要用！！！）
+```cuda
+#include <cuda_runtime.h>
+
+#define BLOCK_SIZE 1024
+
+__global__ void reduction(const float* input, float* output, int N) {
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if (idx < N) {
+        atomicAdd(output, input[idx]);
+    }
+}
+
+extern "C" void solve(const float* input, float* output, int N) {
     reduction<<<(N + BLOCK_SIZE - 1) / BLOCK_SIZE, BLOCK_SIZE>>>(input, output, N);
 }
 ```
