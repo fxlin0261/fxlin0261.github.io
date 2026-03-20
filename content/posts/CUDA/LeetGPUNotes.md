@@ -6,6 +6,8 @@ date: 2026-03-20
 # LeetGPUNotes
 ---
 
+## 
+
 
 ## 1D-Convolution
 
@@ -581,8 +583,229 @@ extern "C" void solve(float* x, int n) {
 }
 ```
 
+## softmax
+
+# 最基础写法
+#include <cuda_runtime.h>
+#include <float.h>
+#include <math.h>
+
+// Row-wise softmax
+// output[row, col] = exp(input[row, col] - row_max) / sum_j exp(input[row, j] - row_max)
+__global__ void softmax_kernel_basic(const float* input,
+                                     float* output,
+                                     int num_rows,
+                                     int num_cols) {
+    int row = blockIdx.x;
+    int col = threadIdx.x;
+
+    if (row >= num_rows || col >= num_cols) return;
+
+    // Step 1: find max value of this row
+    float row_max = -FLT_MAX;
+    for (int j = 0; j < num_cols; ++j) {
+        row_max = fmaxf(row_max, input[row * num_cols + j]);
+    }
+
+    // Step 2: compute denominator
+    float row_sum = 0.0f;
+    for (int j = 0; j < num_cols; ++j) {
+        row_sum += expf(input[row * num_cols + j] - row_max);
+    }
+
+    // Step 3: normalize
+    output[row * num_cols + col] =
+        expf(input[row * num_cols + col] - row_max) / row_sum;
+}
+
+extern "C" void solve(const float* input, float* output, int num_rows, int num_cols) {
+    dim3 block_dim(num_cols);
+    dim3 grid_dim(num_rows);
+    softmax_kernel_basic<<<grid_dim, block_dim>>>(input, output, num_rows, num_cols);
+    cudaDeviceSynchronize();
+}
+
+
+#include <cuda_runtime.h>
+#include <float.h>
+#include <math.h>
+
+#ifndef THREADS_PER_BLOCK
+#define THREADS_PER_BLOCK 256
+#endif
+
+#define FULL_MASK 0xffffffffu
+
+__inline__ __device__ float warp_reduce_max(float value) {
+    value = fmaxf(value, __shfl_down_sync(FULL_MASK, value, 16));
+    value = fmaxf(value, __shfl_down_sync(FULL_MASK, value, 8));
+    value = fmaxf(value, __shfl_down_sync(FULL_MASK, value, 4));
+    value = fmaxf(value, __shfl_down_sync(FULL_MASK, value, 2));
+    value = fmaxf(value, __shfl_down_sync(FULL_MASK, value, 1));
+    return value;
+}
+
+__inline__ __device__ float warp_reduce_sum(float value) {
+    // 从同一个 warp 里“更高编号 lane”的线程那里取一个寄存器值过来
+    // warp 里的每个 thread 都会执行这几行代码 lane 0 的结果一定是整个 warp 的总和
+    // 为什么不会有thread2先执行在thread0 因为wrap中是同步的 thread2和thread0同步执行
+    // 可以理解成两步同时发生：tmp = lane(i+16) 在这一行开始前的 value value = 自己原来的 value + tmp
+    value += __shfl_down_sync(FULL_MASK, value, 16);
+    value += __shfl_down_sync(FULL_MASK, value, 8);
+    value += __shfl_down_sync(FULL_MASK, value, 4);
+    value += __shfl_down_sync(FULL_MASK, value, 2);
+    value += __shfl_down_sync(FULL_MASK, value, 1);
+    return value;
+}
+
+__global__ void softmax_kernel(const float* __restrict__ input,
+                               float* __restrict__ output,
+                               int num_rows,
+                               int num_cols) {
+    // 一个block一行 一行 THREADS_PER_BLOCK 个threads
+    const int row_idx = blockIdx.x;
+    const int thread_idx = threadIdx.x;
+    const int lane_idx = thread_idx & 31;
+    const int warp_idx = thread_idx >> 5;
+    const int num_warps = THREADS_PER_BLOCK / 32;
+
+    if (row_idx >= num_rows) return;
+
+    __shared__ float warp_max_buffer[THREADS_PER_BLOCK / 32];
+    __shared__ float warp_sum_buffer[THREADS_PER_BLOCK / 32];
+
+    // Step 1: compute row maximum
+    float thread_max = -FLT_MAX;
+    // 寻找当前thread的最大值
+    for (int col_idx = thread_idx; col_idx < num_cols; col_idx += THREADS_PER_BLOCK) {
+        thread_max = fmaxf(thread_max, input[row_idx * num_cols + col_idx]);
+    }
+    // 针对当前wrap的最大值
+    thread_max = warp_reduce_max(thread_max);
+    if (lane_idx == 0) {
+        warp_max_buffer[warp_idx] = thread_max;
+    }
+    __syncthreads();
+
+    float row_max = -FLT_MAX;
+    // 只有第 0 个 warp 的线程参与这一步归约。
+    if (warp_idx == 0) {
+        // 第 0 个 warp 的前 num_warps 个线程，各自读取一个 warp 的局部最大值
+        row_max = (thread_idx < num_warps) ? warp_max_buffer[lane_idx] : -FLT_MAX;
+        //  在第 0 个 warp 内继续做一次 warp 级最大值归约
+        row_max = warp_reduce_max(row_max);
+        // 让 block 中的第 0 号线程把最终结果写回共享内存 warp_max_buffer[0]
+        if (thread_idx == 0) {
+            warp_max_buffer[0] = row_max;
+        }
+    }
+    __syncthreads();
+    // 每个thread读取自己行的最大值
+    row_max = warp_max_buffer[0];
+
+    // Step 2: compute denominator
+    // 每个线程先初始化自己的局部和。
+    float thread_sum = 0.0f;
+    // 当前线程以 blockDim.x 为步长，处理这一行中属于自己的若干列。
+    for (int col_idx = thread_idx; col_idx < num_cols; col_idx += THREADS_PER_BLOCK) {
+        thread_sum += expf(input[row_idx * num_cols + col_idx] - row_max);
+    }
+    // 先在每个 warp 内部做一次求和归约。
+    thread_sum = warp_reduce_sum(thread_sum);
+    //  每个 warp 只让 lane 0 把本 warp 的局部和写入共享内存
+    if (lane_idx == 0) {
+        warp_sum_buffer[warp_idx] = thread_sum;
+    }
+    __syncthreads();
+    // 先把当前行的总和初始化为 0
+    float row_sum = 0.0f;
+    if (warp_idx == 0) {
+        // 只有第 0 个 warp 参与这一步
+        // 前面已经算出了“每个 warp 的局部和”，并把它们写到了 warp_sum_buffer[warp_idx] 中
+        row_sum = (thread_idx < num_warps) ? warp_sum_buffer[lane_idx] : 0.0f;
+        // 在第 0 个 warp 内部继续做一次 warp 级求和归约
+        row_sum = warp_reduce_sum(row_sum);
+        if (thread_idx == 0) {
+            // 让 block 中的第 0 号线程把最终结果写回共享内存 warp_sum_buffer[0]
+            warp_sum_buffer[0] = row_sum;
+        }
+    }
+    __syncthreads();
+    // 所有线程都从共享内存的 warp_sum_buffer[0] 中读取同一个最终结果
+    row_sum = warp_sum_buffer[0];
+
+    // Step 3: normalize
+    for (int col_idx = thread_idx; col_idx < num_cols; col_idx += THREADS_PER_BLOCK) {
+        // 每个线程继续按“跨步访问”的方式处理自己负责的若干
+        // exp(input - row_max) / row_sum
+        output[row_idx * num_cols + col_idx] =
+            expf(input[row_idx * num_cols + col_idx] - row_max) / row_sum;
+    }
+}
+
+extern "C" void solve(const float* input, float* output, int num_rows, int num_cols) {
+    dim3 block_dim(THREADS_PER_BLOCK);
+    dim3 grid_dim(num_rows);
+    softmax_kernel<<<grid_dim, block_dim>>>(input, output, num_rows, num_cols);
+    cudaDeviceSynchronize();
+}
+
+
+
 
 ## Reduction
+
+#include <cuda_runtime.h>
+
+template<int BS>
+__global__ void reduction_kernel(const float* __restrict__ input, float* __restrict__ output, int N) {
+    __shared__ float smem[BS];
+    // 一个block中一次处理 2 * BS个元素 总共开了sm * 8个block
+    const int blockStride = gridDim.x * (BS * 2);
+    int tidx = blockIdx.x * (BS * 2) + threadIdx.x;
+    int threadId = threadIdx.x;
+    
+    float threadSum = 0;
+    for (int i = tidx; i < N; i += blockStride) {
+        threadSum += input[i];
+        if (i + BS < N) threadSum += input[i + BS];
+    }
+    smem[threadId] = threadSum;
+    __syncthreads();
+    #pragma unroll
+    for (int stride = BS / 2; stride > 32; stride /= 2) {
+        if (threadId < stride) {
+            smem[threadId] += smem[threadId + stride];
+        }
+        __syncthreads();
+    }
+    if (threadId < 32) {
+        float warpSum = smem[threadId];
+        unsigned mask = 0xffffffffu;
+        // 让当前线程去“拿同一个 warp 里、编号比自己大 offset 的那个线程的 x
+        warpSum += __shfl_down_sync(mask, warpSum, 16);
+        warpSum += __shfl_down_sync(mask, warpSum, 8);
+        warpSum += __shfl_down_sync(mask, warpSum, 4);
+        warpSum += __shfl_down_sync(mask, warpSum, 2);
+        warpSum += __shfl_down_sync(mask, warpSum, 1);
+        if (threadId == 0) atomicAdd(output, warpSum);
+    }
+}
+
+extern "C" void solve(const float *input, float *output, int N) {
+    int dev = 0, sm = 0;
+    cudaGetDevice(&dev);
+    cudaDeviceGetAttribute(&sm, cudaDevAttrMultiProcessorCount, dev);
+
+    constexpr int BS = 16;
+    int naturalBlocks = (N + (BS * 2) - 1) / (BS * 2);
+    if (naturalBlocks > sm * 8) naturalBlocks = sm * 8; 
+    dim3 blocksPerGrid(naturalBlocks);
+    dim3 threadsPerBlock(BS);
+    cudaMemset(output, 0, sizeof(float));
+    reduction_kernel<BS><<<blocksPerGrid, threadsPerBlock>>>(input, output, N);
+}
+
 
 ---
 共享内存 + __shfl_down
