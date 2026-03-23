@@ -1,0 +1,12 @@
+{
+  "updated_at": "2026-03-23T17:34:47.580440+08:00",
+  "item_count": 6,
+  "prompt_preview": "你是一个克制、简洁的技术博客助手。\n请从下面候选中选出今天最适合放在博客首页“今日发现”的 1 条。\n输出 JSON，字段只有: title, source, url, note。\n其中 note 用中文，80~120 字，自然、克制，不要营销腔。\n\n[Item 1]\nsource: Simon Willison\ntitle: Beats now have notes\nurl: https://simonwillison.net/2026/Mar/23/beats-now-have-notes/#atom-everything\ndate: 2026-03-23\nsummary: Last month I added a feature I call beats to this blog, pulling in some of my other content from external sources and including it on the homepage, search and various archive pages on the site. On any given day these frequently outnumber my regular posts. They were looking a little bit thin and were lacking any form of explanation beyond a link, so I've added the ability to annotate them with a \"note\" which now shows up as part of their display. Here's what that looks like for the content I published yesterday : I've also updated the /atom/everything/ Atom feed to include any beats that I've attached notes to. Tags: atom , blogging , site-upgrades\n\n[Item 2]\nsource: Simon Willison\ntitle: Starlette 1.0 skill\nurl: https://simonwillison.net/2026/Mar/23/starlette-1-skill/#atom-everything\ndate: 2026-03-23\nsummary: Research: Starlette 1.0 skill See Experimenting with Starlette 1.0 with Claude skills .",
+  "selected": {
+    "date": "2026-03-23",
+    "title": "Beats now have notes",
+    "source": "Simon Willison",
+    "url": "https://simonwillison.net/2026/Mar/23/beats-now-have-notes/#atom-everything",
+    "note": "今天看到一个挺对味的小更新：给博客里的外部内容流补上 notes 之后，那些原本只是顺手收录的链接，开始带上一点上下文和态度。对个人站点来说，这种轻量但持续的表达，比硬凑长文更有生命力。"
+  }
+}
