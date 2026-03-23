@@ -1,6 +1,6 @@
 {{- define "main" }}
 
-{{- $signals := site.Data.daily-signals }}
+{{- $signals := index site.Data "daily-signals" }}
 
 <header class="page-header">
   <h1>
