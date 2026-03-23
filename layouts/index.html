@@ -2,39 +2,14 @@
 
 {{- $signals := index site.Data "daily-signals" }}
 
-<header class="page-header">
-  <h1>
-    归档
-  </h1>
-</header>
-
 {{- with $signals }}
 <div class="archive-year">
   <h2 class="archive-year-header">每日信号板</h2>
-
-  {{- with .pick_of_the_day }}
-  <div class="archive-entry">
-    <h3 class="archive-entry-title entry-hint-parent">
-      今日唯一值得点开：{{ .title }}
-    </h3>
-    <div class="archive-meta">
-      {{ .source }} · {{ $signals.date }}
-    </div>
-    <div style="margin-top: 8px; color: var(--secondary);">{{ .summary }}</div>
-    <div style="margin-top: 8px; font-size: 0.9em; color: var(--secondary);">
-      {{- range $i, $tag := .tags -}}
-        {{- if $i }} · {{ end -}}#{{ $tag }}
-      {{- end -}}
-    </div>
-    <a class="entry-link" aria-label="signal link to {{ .title }}" href="{{ .url }}"></a>
-  </div>
-  {{- end }}
-
   <div class="archive-posts">
     {{- range .signals }}
     <div class="archive-entry">
       <h3 class="archive-entry-title entry-hint-parent">{{ .title }}</h3>
-      <div class="archive-meta">{{ .source }}</div>
+      <div class="archive-meta">{{ .source }} · {{ $signals.date }}</div>
       <div style="margin-top: 8px; color: var(--secondary);">{{ .summary }}</div>
       <div style="margin-top: 8px; font-size: 0.9em; color: var(--secondary);">
         {{- range $i, $tag := .tags -}}
