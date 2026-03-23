@@ -1,0 +1,33 @@
+{
+  "date": "2026-03-23",
+  "pick_of_the_day": {
+    "title": "Beats now have notes",
+    "source": "Simon Willison",
+    "url": "https://simonwillison.net/2026/Mar/23/beats-now-have-notes/#atom-everything",
+    "summary": "Simon 给博客里的 beats 增加了 note 机制，让外部碎片内容不再只是裸链接，而是能带一点上下文说明。对个人站点来说，这种轻量结构比频繁写长文更适合持续积累。",
+    "tags": ["blogging", "personal-site", "notes"]
+  },
+  "signals": [
+    {
+      "title": "Beats now have notes",
+      "source": "Simon Willison",
+      "url": "https://simonwillison.net/2026/Mar/23/beats-now-have-notes/#atom-everything",
+      "summary": "给博客里的外部内容流补上注释层，让首页和归档里的碎片信息更可读。",
+      "tags": ["blogging", "notes", "site-upgrades"]
+    },
+    {
+      "title": "Starlette 1.0 skill",
+      "source": "Simon Willison",
+      "url": "https://simonwillison.net/2026/Mar/23/starlette-1-skill/#atom-everything",
+      "summary": "围绕 Starlette 1.0 做了一份可复用的 skill，重点不在框架本身，而在把实验经验结构化。",
+      "tags": ["python", "starlette", "skills"]
+    },
+    {
+      "title": "Examples for the tcpdump and dig man pages",
+      "source": "Julia Evans",
+      "url": "https://jvns.ca/blog/2026/03/10/examples-for-the-tcpdump-and-dig-man-pages/",
+      "summary": "给 tcpdump 和 dig 的 man page 补上基础示例，说明真正有价值的文档往往不是更长，而是更容易上手。",
+      "tags": ["linux", "docs", "debugging"]
+    }
+  ]
+}
