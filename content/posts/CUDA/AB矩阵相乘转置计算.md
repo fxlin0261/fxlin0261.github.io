@@ -1,3 +1,9 @@
+---
+title: "AB矩阵相乘转置计算"
+date: 2026-03-26
+summary: "关于AB矩阵相乘转置计算的笔记。"
+---
+
 ```cpp
 __global__ void matMulNaive(float *A, float *B, float *C, int M, int N, int K) {
     int row = blockIdx.y * blockDim.y + threadIdx.y;

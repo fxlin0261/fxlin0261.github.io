@@ -1,3 +1,9 @@
+---
+title: "attention"
+date: 2026-03-26
+summary: "关于attention的笔记。"
+---
+
 ## flash attention 干了什么
 
 ![](./assets/1ae2b9c0e40135cafcfd0754a17b0e3e.jpg)
