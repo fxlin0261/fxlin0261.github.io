@@ -1,8 +1,8 @@
 ---
 title: "PyTorch CUDA Profiling 脚本"
 date: 2026-03-21
+tags: ["CUDA"]
 ---
-
 # PyTorch CUDA Profiling 脚本
 
 下面是一份使用 `torch.profiler` 对 `torch.scatter_` 进行性能分析的测试脚本：

@@ -31,6 +31,7 @@ math = true
 
 [taxonomies]
 series = "series"
+tag = "tags"
 
 [[menu.main]]
 name = "归档"
@@ -38,8 +39,8 @@ url = "/archives/"
 weight = 10
 
 [[menu.main]]
-name = "目录"
-url = "/posts/"
+name = "标签"
+url = "/tags/"
 weight = 20
 
 [[menu.main]]

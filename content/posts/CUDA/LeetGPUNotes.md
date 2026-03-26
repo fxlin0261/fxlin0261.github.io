@@ -1,8 +1,8 @@
 ---
 title: "LeetGPUNotes"
 date: 2026-03-20
+tags: ["CUDA"]
 ---
-
 # LeetGPUNotes
 ---
 

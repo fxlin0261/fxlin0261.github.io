@@ -2,9 +2,9 @@
 title: "C++"
 date: 2026-03-01
 summary: "记录 explicit、宏包装、inline、[[nodiscard]] 和常见位运算写法。"
+tags: ["CPP"]
 showtoc: false
 ---
-
 ## 1. `explicit`
 
 用于禁止单参数构造函数的隐式转换。

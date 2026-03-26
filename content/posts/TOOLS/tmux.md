@@ -1,8 +1,8 @@
 ---
 title: "tmux基本"
 date: 2026-03-19
+tags: ["TOOLS"]
 ---
-
 # tmux基本
 ---
 

@@ -2,8 +2,8 @@
 title: "llama版本区别"
 date: 2026-03-26
 summary: "关于llama版本区别的笔记。"
+tags: ["ML"]
 ---
-
 # LLaMA 版本区别
 
 ## 1. 总体结论

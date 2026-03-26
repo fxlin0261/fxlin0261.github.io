@@ -1,8 +1,8 @@
 ---
 title: "Philox算法"
 date: 2026-03-01
+tags: ["OPS"]
 ---
-
 # Philox算法
 ---
 

@@ -2,8 +2,8 @@
 title: "llama推理流程"
 date: 2026-03-26
 summary: "关于llama推理流程的笔记。"
+tags: ["ML"]
 ---
-
 # LLaMA 推理流程
 
 ## 推理主体流程
