@@ -83,6 +83,33 @@
 }
 
 /* 移动端代码块 */
+.folder-directory-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.folder-directory-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.folder-directory-link {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.folder-directory-count {
+  margin-left: 10px;
+  color: var(--secondary);
+  font-size: 0.95rem;
+}
+
+.folder-directory-desc {
+  margin-top: 6px;
+  color: var(--secondary);
+}
+
 @media (max-width: 768px) {
   .post-content pre,
   .post-content pre code {
