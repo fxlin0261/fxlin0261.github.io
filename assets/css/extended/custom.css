@@ -83,20 +83,6 @@
 }
 
 /* 移动端代码块 */
-/* 首页“今日发现”只做轻量视觉对齐，不压缩内容宽度 */
-.archive-posts-discovery {
-  margin-top: 2px;
-}
-
-.archive-year-discovery .archive-entry {
-  padding-top: 2px;
-}
-
-.archive-discovery-note {
-  margin-top: 8px;
-  color: var(--secondary);
-}
-
 @media (max-width: 768px) {
   .post-content pre,
   .post-content pre code {
