@@ -38,7 +38,7 @@ __global__ void matMulTransposed(float *A, float *B_T, float *C, int M, int N, i
     }
 }
 ```
-![](./assets/697a8cba-4d26-4a59-9a15-249d461e1711.jpg)
+![](/posts/cuda/assets/697a8cba-4d26-4a59-9a15-249d461e1711.jpg)
 
 总结：
 以前是MxK * KxN
@@ -46,6 +46,6 @@ __global__ void matMulTransposed(float *A, float *B_T, float *C, int M, int N, i
 以前是col那一列：k * N + col
 现在是col那一行：col*K + k
 原始AB：
-![](./assets/259f0d3d-031f-4605-9615-7f4ae390b19d.jpg)
+![](/posts/cuda/assets/259f0d3d-031f-4605-9615-7f4ae390b19d.jpg)
 新AB'
-![](./assets/4557aa23-1592-4e2b-bc15-e27737030ecf.jpg)
+![](/posts/cuda/assets/4557aa23-1592-4e2b-bc15-e27737030ecf.jpg)

@@ -6,7 +6,7 @@ summary: "关于attention的笔记。"
 
 ## flash attention 干了什么
 
-![](./assets/1ae2b9c0e40135cafcfd0754a17b0e3e.jpg)
+![](/posts/ml/assets/1ae2b9c0e40135cafcfd0754a17b0e3e.jpg)
 
 ```cpp
 template <typename Ty, int kBc = 4, int kBr = 4, int kDim = 128>
@@ -178,28 +178,28 @@ torch::Tensor flash_attention_v2_cuda(torch::Tensor q, torch::Tensor k,
 $$C_{[m \times n]} = A_{[m \times p]} \times B_{[p \times n]}$$
 
 如果 A 矩阵再拆分为 2 个
-![](./assets/738c8357-c047-4228-a8e4-6ebf4a950269.jpg)
+![](/posts/ml/assets/738c8357-c047-4228-a8e4-6ebf4a950269.jpg)
 如果 B 矩阵再拆分为 2 个
-![](./assets/6d592c30-b927-41b1-830f-cc0029e9bcec.jpg)
+![](/posts/ml/assets/6d592c30-b927-41b1-830f-cc0029e9bcec.jpg)
 如果 AB 都拆
-![](./assets/0bc523eb-4876-4094-88a6-b70da7a6c039.jpg)
+![](/posts/ml/assets/0bc523eb-4876-4094-88a6-b70da7a6c039.jpg)
 
 ### 原始 self-attention 步骤
 
 总结：简单的矩阵分块，一行一起 softmax
 三次写入三次写出：1. QKt 写入写出，2. softmax 写入写出，3. PV 乘法写入写出
 
-![](./assets/64f6457c-d3c2-4d69-994f-939928ff303e.jpg)
-![](./assets/9b33099a-c10c-4f8c-aa9e-8bdc0a9878bc.jpg)
+![](/posts/ml/assets/64f6457c-d3c2-4d69-994f-939928ff303e.jpg)
+![](/posts/ml/assets/9b33099a-c10c-4f8c-aa9e-8bdc0a9878bc.jpg)
 
 ### flash 版本
 
 总结：矩阵分块计算，softmax 也基本是分块计算
-![](./assets/59ebbaed-337f-4b69-b333-5e5ffb5a4206.jpg)
-![](./assets/91c831a7-0ee3-4fd3-aa1c-7f20d973581f.jpg)
-![](./assets/40130b9f-0a9d-4a84-8782-6744c143ee27.jpg)
-![](./assets/39420bc8-3624-480e-a6ae-3b892daa7bfc.jpg)
-![](./assets/8a7475ed-26bc-48b0-bbeb-ef5255811b78.jpg)
+![](/posts/ml/assets/59ebbaed-337f-4b69-b333-5e5ffb5a4206.jpg)
+![](/posts/ml/assets/91c831a7-0ee3-4fd3-aa1c-7f20d973581f.jpg)
+![](/posts/ml/assets/40130b9f-0a9d-4a84-8782-6744c143ee27.jpg)
+![](/posts/ml/assets/39420bc8-3624-480e-a6ae-3b892daa7bfc.jpg)
+![](/posts/ml/assets/8a7475ed-26bc-48b0-bbeb-ef5255811b78.jpg)
 
 ## self-attention
 
