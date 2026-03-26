@@ -3,14 +3,14 @@
 {{- $discovery := index site.Data "daily-discovery" }}
 
 {{- with $discovery }}
-<div class="archive-year">
+<div class="archive-year archive-year-discovery">
   <h2 class="archive-year-header">今日发现</h2>
-  <div class="archive-month">
+  <div class="archive-month archive-month-discovery">
     <div class="archive-posts">
       <div class="archive-entry">
         <h3 class="archive-entry-title entry-hint-parent">{{ .title }}</h3>
         <div class="archive-meta">{{ .source }} · {{ .date }}</div>
-        <div style="margin-top: 8px; color: var(--secondary);">{{ .note }}</div>
+        <div class="archive-discovery-note">{{ .note }}</div>
         <a class="entry-link" aria-label="discovery link to {{ .title }}" href="{{ .url }}"></a>
       </div>
     </div>

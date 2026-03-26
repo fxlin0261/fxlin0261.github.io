@@ -83,7 +83,29 @@
 }
 
 /* 移动端代码块 */
+/* 首页“今日发现”与归档列表对齐 */
+.archive-year-discovery .archive-month-discovery {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  column-gap: 24px;
+  align-items: start;
+}
+
+.archive-year-discovery .archive-posts {
+  min-width: 0;
+}
+
+.archive-discovery-note {
+  margin-top: 8px;
+  color: var(--secondary);
+}
+
 @media (max-width: 768px) {
+  .archive-year-discovery .archive-month-discovery {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+
   .post-content pre,
   .post-content pre code {
     font-size: 13px;
