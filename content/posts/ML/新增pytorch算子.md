@@ -1,6 +1,6 @@
 ---
 title: "新增pytorch算子"
-date: 2026-03-26
+date: 2026-03-17
 summary: "关于新增pytorch算子的笔记。"
 tags: ["ML"]
 ---

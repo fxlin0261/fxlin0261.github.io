@@ -1,6 +1,6 @@
 ---
 title: "attention"
-date: 2026-03-26
+date: 2026-03-20
 summary: "关于attention的笔记。"
 tags: ["ML"]
 ---
