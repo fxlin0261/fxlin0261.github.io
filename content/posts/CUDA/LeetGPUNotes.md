@@ -6,9 +6,6 @@ tags: ["CUDA"]
 # LeetGPUNotes
 ---
 
-## 
-
-
 ## 1D-Convolution
 
 ---
@@ -585,7 +582,9 @@ extern "C" void solve(float* x, int n) {
 
 ## softmax
 
+---
 # 最基础写法
+```cuda
 #include <cuda_runtime.h>
 #include <float.h>
 #include <math.h>
@@ -626,6 +625,9 @@ extern "C" void solve(const float* input, float* output, int num_rows, int num_c
 }
 
 
+```
+
+```cuda
 #include <cuda_runtime.h>
 #include <float.h>
 #include <math.h>
@@ -749,12 +751,12 @@ extern "C" void solve(const float* input, float* output, int num_rows, int num_c
     softmax_kernel<<<grid_dim, block_dim>>>(input, output, num_rows, num_cols);
     cudaDeviceSynchronize();
 }
-
-
-
+```
 
 ## Reduction
 
+---
+```cuda
 #include <cuda_runtime.h>
 
 template<int BS>
@@ -806,7 +808,7 @@ extern "C" void solve(const float *input, float *output, int N) {
     reduction_kernel<BS><<<blocksPerGrid, threadsPerBlock>>>(input, output, N);
 }
 
-
+```
 ---
 共享内存 + __shfl_down
 ```cuda
