@@ -2,7 +2,7 @@
 title: NPU Tiling切分逻辑
 date: 2026-02-14 16:13:00 +0800
 categories: [AI Infra]
-tags: [policy]
+tags: ["ML"]
 math: true
 mermaid: true
 ---
