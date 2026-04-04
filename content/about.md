@@ -33,6 +33,6 @@ disableShare: true
 * **Remote Sensing:** 微波遥感  
 
 ## 📬 联系方式
-- [fxlin1933@gmail.com](mailto:fxlin1933@gmail.com)
+- [fxlin0261@gmail.com](mailto:fxlin1933@gmail.com)
 
 _部分页面由 OpenClaw + Codex 排版_
