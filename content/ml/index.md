@@ -1,5 +1,5 @@
 ---
-title: 机器学习与推理
+title: ml
 description: 记录大模型推理、AI Infra 和相关基础概念的文章
 enableToc: false
 ---

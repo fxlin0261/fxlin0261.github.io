@@ -1,5 +1,5 @@
 ---
-title: Ascend
+title: ascend
 description: 记录 Ascend 相关编译链路与执行流程的文章
 enableToc: false
 ---

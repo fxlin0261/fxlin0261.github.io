@@ -1,5 +1,5 @@
 ---
-title: 算子与底层实现
+title: ops
 description: 记录算子实现、数值表示和底层细节的文章
 enableToc: false
 ---

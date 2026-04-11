@@ -1,5 +1,9 @@
 @use "./base.scss";
 
+:root {
+  --left-sidebar-extra: clamp(0px, calc((100vw - 1500px) / 2), 48px);
+}
+
 ::selection {
   background: var(--highlight);
 }
@@ -17,4 +21,11 @@ article {
 
 .sidebar.left .explorer .title-button h2 {
   letter-spacing: 0.02em;
+}
+
+@media all and (min-width: 1200px) {
+  .page > #quartz-body > .sidebar.left {
+    width: calc(320px + var(--left-sidebar-extra));
+    margin-left: calc(-1 * var(--left-sidebar-extra));
+  }
 }

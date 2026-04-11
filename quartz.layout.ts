@@ -8,7 +8,6 @@ export const sharedPageComponents: SharedLayout = {
     Component.NavLinks({
       links: {
         归档: "archive",
-        标签: "tags",
         关于: "about",
       },
     }),
@@ -34,7 +33,6 @@ export const defaultContentPageLayout: PageLayout = {
       component: Component.ContentMeta(),
       condition: (page) => page.fileData.slug !== "index",
     }),
-    Component.TagList(),
   ],
   left: [
     Component.PageTitle(),
