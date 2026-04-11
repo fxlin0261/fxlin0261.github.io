@@ -1,0 +1,20 @@
+@use "./base.scss";
+
+::selection {
+  background: var(--highlight);
+}
+
+article {
+  p,
+  li {
+    line-height: 1.85;
+  }
+}
+
+.article-title {
+  letter-spacing: -0.02em;
+}
+
+.sidebar.left .explorer .title-button h2 {
+  letter-spacing: 0.02em;
+}
