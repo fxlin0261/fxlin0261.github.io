@@ -173,6 +173,11 @@ export function resolveRelative(current: FullSlug, target: FullSlug | SimpleSlug
   return res
 }
 
+function resolveFromBase(base: FullSlug, target: string): FullSlug {
+  const resolved = new URL(target, `https://quartz/${stripSlashes(base, true)}`)
+  return stripSlashes(resolved.pathname, true) as FullSlug
+}
+
 export function splitAnchor(link: string): [string, string] {
   let [fp, anchor] = link.split("#", 2)
   if (fp.endsWith(".pdf")) {
@@ -235,6 +240,14 @@ export function transformLink(src: FullSlug, target: string, opts: TransformOpti
     const folderTail = isFolderPath(targetSlug) ? "/" : ""
     const canonicalSlug = stripSlashes(targetSlug.slice(".".length))
     let [targetCanonical, targetAnchor] = splitAnchor(canonicalSlug)
+
+    const fileExt = getFileExtension(targetCanonical)
+    if (fileExt !== undefined && ![".md", ".html"].includes(fileExt)) {
+      const relativeTarget = resolveFromBase(src, targetCanonical)
+      if (opts.allSlugs.includes(relativeTarget)) {
+        return (resolveRelative(src, relativeTarget) + targetAnchor) as RelativeURL
+      }
+    }
 
     if (opts.strategy === "shortest") {
       // if the file name is unique, then it's just the filename

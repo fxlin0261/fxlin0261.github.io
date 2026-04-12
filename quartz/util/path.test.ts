@@ -199,6 +199,7 @@ describe("link strategies", () => {
     "a/b/c",
     "a/b/d",
     "a/b/index",
+    "a/b/assets/local.png",
     "e/f",
     "e/g/h",
     "index",
@@ -223,6 +224,7 @@ describe("link strategies", () => {
       assert.strictEqual(path.transformLink(cur, "tag/test", opts), "../../tag/test")
       assert.strictEqual(path.transformLink(cur, "a/b/c#test", opts), "../../a/b/c#test")
       assert.strictEqual(path.transformLink(cur, "a/test.png", opts), "../../a/test.png")
+      assert.strictEqual(path.transformLink(cur, "assets/local.png", opts), "../../a/b/assets/local.png")
     })
 
     test("from a/b/index", () => {
@@ -257,6 +259,7 @@ describe("link strategies", () => {
       assert.strictEqual(path.transformLink(cur, "index.png", opts), "../../index.png")
       assert.strictEqual(path.transformLink(cur, "test.png", opts), "../../a/test.png")
       assert.strictEqual(path.transformLink(cur, "index#abc", opts), "../../#abc")
+      assert.strictEqual(path.transformLink(cur, "assets/local.png", opts), "../../a/b/assets/local.png")
     })
 
     test("from a/b/index", () => {
